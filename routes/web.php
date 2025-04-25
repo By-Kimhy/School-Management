@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\AuthController;
 use App\Http\Controllers\backend\BDashboardController;
 use App\Http\Controllers\backend\BMajorController;
 use App\Http\Controllers\frontend\AboutController;
@@ -32,6 +33,10 @@ Route::controller(AboutController::class)->group(function(){
 });
 
 /* backend block */
+Route::controller(AuthController::class)->group(function(){
+    Route::get('/login','index');
+});
+
 Route::controller(BDashboardController::class)->group(function(){
     Route::get('/dashboard','index');
 });

@@ -13,10 +13,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('level',100)->nullable();
-            $table->enum('active',['1','0'])->default('1');
-            $table->string('language',5)->nullable();
+            if (!Schema::hasColumn('users', 'level')) {
+                $table->string('level', 100)->nullable();
+            }
+            if (!Schema::hasColumn('users', 'active')) {
+                $table->enum('active', ['1', '0'])->default('1');
+            }
+            if (!Schema::hasColumn('users', 'language')) {
+                $table->string('language', 5)->nullable();
+            }
         });
+        
     }
 
     /**
