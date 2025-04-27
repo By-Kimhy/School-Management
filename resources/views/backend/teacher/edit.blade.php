@@ -1,79 +1,236 @@
 @extends('backend.layout.master')
-@section('title', 'EditMajor')
+@section('title', 'EditTeacher')
+@section('t_menu-open', 'menu-open')
+@section('t_active', 'active')
 @section( 'content')
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
+            <!-- /.card -->
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <a href="{{route('major.index')}}" class="btn btn-outline-primary">
+                    <a href="{{route('teacher.index')}}" class="btn btn-outline-primary">
                         <i class="fas fa-arrow-circle-left"></i> Back
                     </a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Major</li>
+                        <li class="breadcrumb-item active">Update</li>
                     </ol>
                 </div>
+                <div class="col-sm-12">
+                    @if ($errors->any()){
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($$errors ->all() as $error)
+                            <li>
+                                {$error}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    }
+                    @endif
+                </div>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
+            <!-- SELECT2 EXAMPLE -->
+            <div class="card card-default">
+                <form action="{{url('/teacher/'.$teachers->id)}}" method="POST" enctype="multipart/form-data>
+                    @csrf
+                    <div class="card-header">
+                        <h3 class="card-title">Teacher Form</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Teacher Code <span class="text-danger">*</span></label>
+                                    <input type="text" name="teacher_code" value="{{$teachers->teacher_code}}" class="form-control" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Gender<span class="text-danger">*</span></label>
+                                    <select name="gender_id" class="form-control select2" style="width: 100%;">
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email<span class="text-danger">*</span></label>
+                                    <input type="email" name="teacher_email" value="{{$teachers->teacher_email}}" class="form-control"">
+                                </div>
+                                </div>
+                                <!-- /.col -->
+                                <div class=" col-md-6">
+                                    <div class="form-group">
+                                        <label>Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="teacher_name" value="{{$teachers->teacher_name}}" class="form-control"">
+                                </div>
 
-    <div class="col-md-12">
-        <!-- general form elements -->
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Edit Major</h3>
-            </div>
-            <!-- /.card-header -->
-            <!-- form start -->
-            <form action="{{url('/major/'.$majors->id)}}" method="POST">
-                @csrf
-                @method('PATCH')
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>Major Type <span class="text-danger">*</span></label>
-                        <input type="text" name="major_type" value="{{$majors->major_type}}" class="form-control" placeholder="Enter Major...">
-                    </div>
-                    @error('major_type')
-                    <small class="text-danger">{{$message}}</small>
-                    @enderror
-                    <div class="form-group">
-                        <label>Description <span class="text-danger">*</span></label>
-                        <input type="text" name="major_Des" value="{{$majors->major_Des}}" class="form-control" placeholder="Enter Major Description...">
-                    </div>
-                    @error('major_type')
-                    <small class="text-danger">{{$message}}</small>
-                    @enderror
-                    <div class="form-group">
-                        <label>File input</label>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input">
-                                <label class="custom-file-label">Choose file</label>
+
+                                        <!-- Date -->
+                                        <div class=" form-group">
+                                        <label>Date Of Birth <span class="text-danger">*</span></label>
+                                        <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                            <input type="text" name="teacher_dob" value="{{$teachers->teacher_dob}}" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- phone mask -->
+                                    <div class="form-group">
+                                        <label>Phone Number<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            </div>
+                                            <input type="text" name="teacher_phone" value="{{$teachers->teacher_phone}}" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                        </div>
+                                        <!-- /.input group -->
+                                    </div>
+                                </div>
+                                <!-- /.col -->
                             </div>
-                            <div class="input-group-append">
-                                <span class="input-group-text">Upload</span>
+                            <!-- /.row -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Biography</label>
+                                        <textarea class="form-control" name="teacher_profile" value="{{$teachers->teacher_profile}}" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Image File input</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="teacher_photo" value="{{$teachers->teacher_photo}}" class="custom-file-input">
+                                                <label class="custom-file-label">Choose file</label>
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Display Image</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div>
-                </div>
-                <!-- /.card-body -->
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                </form>
+            </div>
 
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
-        </div>
-        <!-- /.card -->
-    </div>
+        </div><!-- /.container-fluid -->
+    </section>
 </div>
 
+@endsection
+
+
+@section('include_library_js')
+<script>
+    $(function() {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', {
+            'placeholder': 'dd/mm/yyyy'
+        })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', {
+            'placeholder': 'mm/dd/yyyy'
+        })
+        //Money Euro
+        $('[data-mask]').inputmask()
+
+        //Date picker
+        $('#reservationdate').datetimepicker({
+            //format: 'L'
+            format: 'YYYY-MM-DD'
+
+        });
+
+        //Date and time picker
+        $('#reservationdatetime').datetimepicker({
+            icons: {
+                time: 'far fa-clock'
+            }
+        });
+
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({
+            timePicker: true
+            , timePickerIncrement: 30
+            , locale: {
+                format: 'MM/DD/YYYY hh:mm A'
+            }
+        })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker({
+                ranges: {
+                    'Today': [moment(), moment()]
+                    , 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')]
+                    , 'Last 7 Days': [moment().subtract(6, 'days'), moment()]
+                    , 'Last 30 Days': [moment().subtract(29, 'days'), moment()]
+                    , 'This Month': [moment().startOf('month'), moment().endOf('month')]
+                    , 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+                , startDate: moment().subtract(29, 'days')
+                , endDate: moment()
+            }
+            , function(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        )
+
+        //Timepicker
+        $('#timepicker').datetimepicker({
+            format: 'LT'
+        })
+
+        //Bootstrap Duallistbox
+        $('.duallistbox').bootstrapDualListbox()
+
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+
+        $('.my-colorpicker2').on('colorpickerChange', function(event) {
+            $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+        })
+
+        $("input[data-bootstrap-switch]").each(function() {
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        })
+
+    })
+    // BS-Stepper Init
+    document.addEventListener('DOMContentLoaded', function() {
+        window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
+
+</script>
 @endsection

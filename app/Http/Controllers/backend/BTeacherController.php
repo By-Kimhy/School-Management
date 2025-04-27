@@ -55,8 +55,8 @@ class BTeacherController extends Controller
             
         // ]);
 
-        $dobString=$request->teacher_dob;
-        $fmt_teacher_dob=Carbon::createFromFormat('d/m/Y',$dobString)->format('Y-m-d');
+        // $dobString=$request->teacher_dob;
+        // $fmt_teacher_dob=Carbon::createFromFormat('d/m/Y',$dobString)->format('Y-m-d');
 
         if($request->teacher_photo){
             $image_name = $request->file('teacher_photo');
@@ -76,7 +76,7 @@ class BTeacherController extends Controller
             'teacher_code'=>$request->teacher_code,
             'teacher_name'=>$request->teacher_name,
             'gender_id'=>$request->gender_id,
-            'teacher_dob'=>$fmt_teacher_dob,
+            'teacher_dob'=>$request->teacher_dob,
             'teacher_email'=>$request->teacher_email,
             'teacher_phone'=>$request->teacher_phone,
             'teacher_profile'=>$request->teacher_profile,
@@ -98,7 +98,9 @@ class BTeacherController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $teachers=Teacher::find($id);
+        return view('backend.teacher.edit')
+        ->with('teachers',$teachers);
     }
 
     /**
@@ -106,7 +108,12 @@ class BTeacherController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $teachers=Teacher::find($id);
+        $input=$request->all();
+        $teachers->update($input);
+
+        return redirect('/teacher')
+        ->with('flash_message','Teacher Updated!');
     }
 
     /**

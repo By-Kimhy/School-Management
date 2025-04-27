@@ -56,7 +56,7 @@ class BMajorController extends Controller
     {
         $majors=Major::find($id);
         return view('backend.major.edit')
-        ->with('majors',$majors);;
+        ->with('majors',$majors);
     }
 
     /**
