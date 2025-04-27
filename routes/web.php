@@ -3,6 +3,7 @@
 use App\Http\Controllers\backend\AuthController;
 use App\Http\Controllers\backend\BDashboardController;
 use App\Http\Controllers\backend\BMajorController;
+use App\Http\Controllers\backend\BTeacherController;
 use App\Http\Controllers\frontend\AboutController;
 use App\Http\Controllers\frontend\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -42,3 +43,10 @@ Route::controller(BDashboardController::class)->group(function(){
 });
 
 Route::resource('/major',BMajorController::class);
+
+Route::resource('/teacher',BTeacherController::class);
+
+// Route::controller(BTeacherController::class)->group(function(){
+//     Route::get('teacher','index')->name('teacher.index');
+//     Route::get('teacher','create')->name('teacher.create');
+// });

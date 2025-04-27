@@ -1,5 +1,7 @@
 @extends('backend.layout.master')
 @section('title', 'Dashboard')
+@section('d_menu-open', 'menu-open')
+@section('d_active', 'active')
 @section( 'content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
