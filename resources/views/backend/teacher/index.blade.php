@@ -53,7 +53,11 @@
                                     @foreach($teachers as $key => $value)
                                     <tr>
                                         <td>{{++$key}}</td>
-                                        <td>{{$value->teacher_photo}}</td>
+                                        <td>
+                                            
+                                            <img src="{{asset('/uploads/thumbnail/teacher/'.$value->teacher_photo)}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                        
+                                        </td>
                                         <td>{{$value->teacher_code}}</td>
                                         <td>{{$value->teacher_name}}</td>
                                         <td>{{$value->teacher_dob}}</td>
@@ -62,16 +66,16 @@
                                         <td>{{$value->teacher_profile}}</td>
                                         
                                         
-                                        {{-- <td>
+                                        <td>
                                             <button type="button" class="btn btn-outline-primary"><i class="far fa-eye"></i> View</button>
-                                            <a href="{{url('/'.$value->id.'/edit')}}" type="button" class="btn btn-outline-info"><i class="far fa-edit"></i> Edit</a>
+                                            <a href="{{url('teacher/'.$value->id.'/edit')}}" type="button" class="btn btn-outline-info"><i class="far fa-edit"></i> Edit</a>
                                             
-                                            <form action="{{url('/'.$value->id)}}" method="POST" style="display: inline">
+                                            <form action="{{url('teacher/'.$value->id)}}" method="POST" style="display: inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure to Delete?')"><i class="fas fa-trash"></i> Delete</button>    
                                             </form>
-                                        </td> --}}
+                                        </td>
                                     </tr>
                                     @endforeach
 

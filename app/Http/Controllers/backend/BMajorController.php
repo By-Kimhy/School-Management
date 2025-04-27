@@ -31,13 +31,13 @@ class BMajorController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated_major = $request->validate([
             'major_type' => 'required|unique:majors|max:10',
             'major_Des' => 'required',
         ]);
 
         $input=$request->all();
-        Major::create($input, $validated);
+        Major::create($input,$validated_major);
         return redirect('/major')->with('flash_message','Major Added!');
     }
 
