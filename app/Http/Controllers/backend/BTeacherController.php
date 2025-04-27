@@ -109,8 +109,17 @@ class BTeacherController extends Controller
     public function update(Request $request, string $id)
     {
         $teachers=Teacher::find($id);
-        $input=$request->all();
-        $teachers->update($input);
+
+        $teachers->update([
+            'teacher_code'=>$request->teacher_code,
+            'teacher_name'=>$request->teacher_name,
+            'gender_id'=>$request->gender_id,
+            'teacher_dob'=>$request->teacher_dob,
+            'teacher_email'=>$request->teacher_email,
+            'teacher_phone'=>$request->teacher_phone,
+            'teacher_profile'=>$request->teacher_profile,
+            'teacher_photo'=>$input['teacher_photo'],
+        ]);
 
         return redirect('/teacher')
         ->with('flash_message','Teacher Updated!');
